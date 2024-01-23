@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="753.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java.fx.ControladorEditarProyectos">
+    <VBox alignment="TOP_CENTER" fillWidth="true" layoutX="14.0" layoutY="10.0" spacing="20" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="10.0">
+        <padding>
+            <Insets bottom="10" left="10" right="10" top="10" />
+        </padding>
+
+        <!-- Formulario para ingresar detalles del proyecto -->
+        <VBox alignment="TOP_CENTER" spacing="10">
+            <Label text="Agregar/Editar Proyecto" />
+            <TextField fx:id="txtNombreProyecto" promptText="Nombre del Proyecto" />
+            <DatePicker fx:id="dpFechaCreacion" promptText="Fecha de Creación" />
+            <DatePicker fx:id="dpFechaInicio" promptText="Fecha de Inicio" />
+            <DatePicker fx:id="dpFechaFin" promptText="Fecha de Fin" />
+            <TextField fx:id="txtCodigoProyecto" promptText="Código del Proyecto" />
+            <TextField fx:id="txtPalabrasClave" promptText="Palabras Clave" />
+            <TextField fx:id="txtTipoProyecto" promptText="Tipo de Proyecto" />
+            <CheckBox fx:id="chkActivo" text="Activo" />
+            <TextField fx:id="txtCalificacion" promptText="Calificación" />
+
+            <Button fx:id="btnSeleccionarArchivos" text="Seleccionar Archivos" onAction="#seleccionarYGuardarArchivos"/>
+
+            <!-- Documentos y otros campos binarios o grandes pueden requerir un manejo especial -->
+            <TextField fx:id="txtAuditoria" promptText="Auditoría" />
+            <CheckBox fx:id="chkEnCooperacion" text="En Cooperación" />
+            <CheckBox fx:id="chkBajadaCalificacion" text="Bajada de Calificación" />
+            <TextField fx:id="txtFases" promptText="Fases" />
+            <Button fx:id="btnGuardar" onAction="#guardarProyecto" text="Guardar">
+            <VBox.margin>
+               <Insets top="50.0" />
+            </VBox.margin>
+         </Button>
+         <Button fx:id="btnVolverLoggin" mnemonicParsing="false" onAction="#irLoggin" text="Volver Loggin">
+            <VBox.margin>
+               <Insets top="70.0" />
+            </VBox.margin>
+         </Button>
+        </VBox>
+
+    </VBox>
+</AnchorPane>

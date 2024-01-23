@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java.fx.ControladorVistaAdmin" prefHeight="400.0" prefWidth="600.0">
+    <VBox spacing="10" alignment="TOP_CENTER" fillWidth="true" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+        <Label text="Administración de Usuarios" style="-fx-font-size: 20px;"/>
+        <TableView fx:id="tablaUsuarios" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn text="ID" prefWidth="50.0">
+                    <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Nombre" prefWidth="150.0">
+                    <cellValueFactory><PropertyValueFactory property="nombre"/></cellValueFactory>
+                </TableColumn>
+                <!-- La contraseña no se debería mostrar en texto plano por razones de seguridad -->
+                <TableColumn text="Rol" prefWidth="100.0">
+                    <cellValueFactory><PropertyValueFactory property="rol"/></cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Agregar Usuario" onAction="#agregarUsuario"/>
+            <Button text="Eliminar Usuario" onAction="#eliminarUsuario"/>
+            <Button text="Cambiar Permisos" onAction="#cambiarPermisos"/>
+        </HBox>
+    </VBox>
+</AnchorPane>
