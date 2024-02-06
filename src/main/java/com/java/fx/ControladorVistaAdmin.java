@@ -5,10 +5,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
+@Component
 public class ControladorVistaAdmin implements Initializable {
 
     @FXML

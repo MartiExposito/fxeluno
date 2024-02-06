@@ -86,8 +86,8 @@ public class ControladorVistaReader {
     private void configurarColumnasDocumento() {
         idDocumentoColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         // Asumiendo que idProyectoDocumentoColumn muestra el ID del proyecto asociado al documento
-        idProyectoDocumentoColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getIdProyecto().getId()));
-        archivoDocumentoColumn.setCellValueFactory(new PropertyValueFactory<>("archivo"));
+        idProyectoDocumentoColumn.setCellValueFactory(new PropertyValueFactory<>("idProyecto"));
+        archivoDocumentoColumn.setCellValueFactory(new PropertyValueFactory<>("nombreArchivo"));
         // Si necesitas añadir más columnas para la entidad Documento, hazlo aquí
     }
 

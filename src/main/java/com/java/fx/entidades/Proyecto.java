@@ -1,10 +1,13 @@
 package com.java.fx.entidades;
 
+import com.java.fx.entidades.Documento;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,6 +24,8 @@ public class Proyecto {
 
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDate fechaCreacion;
+
+
 
     @Column(name = "fecha_inicio", nullable = false)
     private LocalDate fechaInicio;
@@ -55,10 +60,7 @@ public class Proyecto {
     @Column(name = "fases")
     private String fases;
 
-    public Proyecto(int i, String s, LocalDate now, String s1, String s2, String s3) {
-    }
+    @OneToMany(mappedBy = "idProyecto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Documento> documentos = new LinkedHashSet<>();
 
-    public Proyecto() {
-
-    }
 }
