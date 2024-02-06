@@ -1,6 +1,5 @@
 package com.java.fx.entidades;
 
-import com.java.fx.entidades.Documento;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,7 +45,7 @@ public class Proyecto {
     private Boolean activo;
 
     @Column(name = "calificacion")
-    private Integer calificacion;
+    private String calificacion;
 
     @Column(name = "auditoria", length = 50)
     private String auditoria;
@@ -62,5 +61,10 @@ public class Proyecto {
 
     @OneToMany(mappedBy = "idProyecto", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Documento> documentos = new LinkedHashSet<>();
+
+    @Override
+    public String toString(){
+        return id.toString();
+    }
 
 }

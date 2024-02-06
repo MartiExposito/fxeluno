@@ -7,13 +7,23 @@ import com.java.fx.entidades.ProyectoRepository;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class ControladorVistaReader {
 
@@ -50,6 +60,7 @@ public class ControladorVistaReader {
     @FXML private TableColumn<Proyecto, Boolean> bajadaCalificacionColumn;
     @FXML private TableColumn<Proyecto, String> fasesColumn;
 
+    @FXML private TextField campoBusqueda;
 
     @FXML
     private TableColumn<Documento, Integer> idDocumentoColumn;
@@ -64,6 +75,16 @@ public class ControladorVistaReader {
         configurarColumnasDocumento();
         cargarProyectos();
         escucharSeleccionProyecto();
+        configurarDobleClicEnDocumentos();
+    }
+    @FXML
+    private void filtrarProyectosPorPalabraClave(){
+        String textoBusqueda = campoBusqueda.getText().toLowerCase();
+        List<Proyecto> proyectosFiltrados = proyectoRepository.findAll().stream()
+                .filter(p -> p.getPalabrasClave().toLowerCase().contains(textoBusqueda))
+                .collect(Collectors.toList());
+        tablaProyectos.getItems().setAll(proyectosFiltrados);
+
     }
 
     private void configurarColumnasProyecto() {
@@ -84,11 +105,10 @@ public class ControladorVistaReader {
     }
 
     private void configurarColumnasDocumento() {
-        idDocumentoColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        // Asumiendo que idProyectoDocumentoColumn muestra el ID del proyecto asociado al documento
+
         idProyectoDocumentoColumn.setCellValueFactory(new PropertyValueFactory<>("idProyecto"));
         archivoDocumentoColumn.setCellValueFactory(new PropertyValueFactory<>("nombreArchivo"));
-        // Si necesitas añadir más columnas para la entidad Documento, hazlo aquí
+
     }
 
 
@@ -108,5 +128,42 @@ public class ControladorVistaReader {
                 cargarDocumentos(newSelection);
             }
         });
+    }
+
+    private void configurarDobleClicEnDocumentos() {
+        tablaDocumentos.setRowFactory(tv -> {
+            TableRow<Documento> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Documento documentoSeleccionado = row.getItem();
+                    abrirDocumento(documentoSeleccionado);
+                }
+            });
+            return row;
+        });
+    }
+
+    private void abrirDocumento(Documento documento) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialFileName(documento.getNombreArchivo());
+
+        File archivoDestino = fileChooser.showSaveDialog(tablaDocumentos.getScene().getWindow());
+        if (archivoDestino != null) {
+            guardarYAbrirArchivo(documento, archivoDestino);
+        }
+    }
+
+    private void guardarYAbrirArchivo(Documento documento, File archivoDestino) {
+        try {
+            byte[] contenidoArchivo = documento.getArchivo();
+            try (FileOutputStream fos = new FileOutputStream(archivoDestino)) {
+                fos.write(contenidoArchivo);
+            }
+
+            Desktop.getDesktop().open(archivoDestino);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Manejar el error adecuadamente
+        }
     }
 }
