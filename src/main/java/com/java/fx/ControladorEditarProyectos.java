@@ -2,6 +2,7 @@ package com.java.fx;
 
 import com.java.fx.entidades.Proyecto;
 import com.java.fx.entidades.ProyectoRepository;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -55,6 +56,8 @@ public class ControladorEditarProyectos {
     private TextField txtFases;
     @FXML
     private Button btnVolverLoggin;
+    @FXML
+    private Button btnSeleccionarArchivos;
 
     private Proyecto proyectoActual;
 
@@ -132,4 +135,6 @@ public class ControladorEditarProyectos {
         }
     }
 
+    public void seleccionarYGuardarArchivos(ActionEvent actionEvent) {
+    }
 }

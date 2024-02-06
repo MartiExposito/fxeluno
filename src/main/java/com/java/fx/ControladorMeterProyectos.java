@@ -1,5 +1,10 @@
 package com.java.fx;
 
+import java.io.File;
+import java.nio.file.Files;
+
+import com.java.fx.entidades.Documento;
+import com.java.fx.entidades.DocumentoRepository;
 import com.java.fx.entidades.Proyecto;
 import com.java.fx.entidades.ProyectoRepository;
 import javafx.fxml.FXML;
@@ -8,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +21,22 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
 public class ControladorMeterProyectos {
 
     private final ProyectoRepository proyectoRepository;
-    @Autowired
-    public ControladorMeterProyectos(ProyectoRepository proyectoRepository) {
-        this.proyectoRepository = proyectoRepository;
-    }
 
+    private final DocumentoRepository documentoRepository;
+
+
+    @Autowired
+    public ControladorMeterProyectos(ProyectoRepository proyectoRepository, DocumentoRepository documentoRepository) {
+        this.proyectoRepository = proyectoRepository;
+        this.documentoRepository = documentoRepository;
+    }
 
     @FXML
     private TextField txtNombreProyecto;
@@ -98,6 +109,9 @@ public class ControladorMeterProyectos {
 
     @FXML
     private Button btnVolverLoggin;
+    @FXML
+    private Button btnSeleccionarArchivos;
+
 
     @FXML
     private void guardarProyecto() {
@@ -125,6 +139,38 @@ public class ControladorMeterProyectos {
 
         // Vuelve a cargar los proyectos en la tabla
         cargarProyectosEnTabla();
+    }
+
+
+    @FXML
+    private void seleccionarYGuardarArchivos() {
+        Proyecto proyectoSeleccionado = tablaProyectos.getSelectionModel().getSelectedItem();
+        if (proyectoSeleccionado == null) {
+            mostrarMensajeError("No se ha seleccionado ningún proyecto.");
+            return;
+        }
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar Documentos");
+        List<File> files = fileChooser.showOpenMultipleDialog(null);
+
+        if (files != null) {
+            for (File file : files) {
+                try {
+                    byte[] archivo = Files.readAllBytes(file.toPath());
+                    Documento documento = new Documento();
+                    documento.setArchivo(archivo);
+                    documento.setIdProyecto(proyectoSeleccionado); // Asocia el documento al proyecto seleccionado
+                    documento.setNombreArchivo(file.getName());
+
+
+                    documentoRepository.save(documento);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // Manejar la excepción adecuadamente
+                }
+            }
+        }
     }
 
     @FXML

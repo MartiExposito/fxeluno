@@ -21,4 +21,7 @@ public class Documento {
     @Column(name = "archivo")
     private byte[] archivo;
 
+    @Column(name = "nombre_archivo")
+    private String nombreArchivo;
+
 }

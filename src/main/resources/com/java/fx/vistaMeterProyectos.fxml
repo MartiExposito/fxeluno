@@ -32,6 +32,8 @@
             <TextField fx:id="txtTipoProyecto" promptText="Tipo de Proyecto" />
             <CheckBox fx:id="chkActivo" text="Activo" />
             <TextField fx:id="txtCalificacion" promptText="Calificación" />
+            <Button fx:id="btnSeleccionarArchivos" text="Seleccionar Archivos" onAction="#seleccionarYGuardarArchivos"/>
+
             <!-- Documentos y otros campos binarios o grandes pueden requerir un manejo especial -->
             <TextField fx:id="txtAuditoria" promptText="Auditoría" />
             <CheckBox fx:id="chkEnCooperacion" text="En Cooperación" />

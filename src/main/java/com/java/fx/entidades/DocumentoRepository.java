@@ -3,6 +3,9 @@ package com.java.fx.entidades;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface DocumentoRepository extends JpaRepository<Documento,Integer> {
+public interface DocumentoRepository extends JpaRepository<Documento, Integer> {
+    List<Documento> findByIdProyecto(Proyecto proyecto); // Cambiado de findByProyecto a findByIdProyecto
 }
