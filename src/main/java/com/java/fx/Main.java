@@ -10,23 +10,38 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class Main extends Application {
-	public static ConfigurableApplicationContext context;
+
+	private static ConfigurableApplicationContext context;
+	private static String[] savedArgs;
 
 	public static void main(String[] args) {
-		launch();
-		SpringApplication.run(Main.class, args);
+		savedArgs = args;
+		Application.launch(Main.class, args);
+	}
+
+	@Override
+	public void init() {
+		context = SpringApplication.run(Main.class, savedArgs);
 	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
-	context = SpringApplication.run(Main.class);
-	FXMLLoader fxml = new FXMLLoader(getClass().getResource("/com/java/fx/main.fxml"));
-	fxml.setControllerFactory(context::getBean);
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/java/fx/main.fxml"));
+		fxmlLoader.setControllerFactory(context::getBean);
 
-		Scene scene = new Scene(fxml.load());
+		Scene scene = new Scene(fxmlLoader.load());
 		stage.setTitle("Gestor");
 		stage.setScene(scene);
 		stage.show();
+	}
 
+	@Override
+	public void stop() {
+		context.close();
+	}
+
+
+	public static ConfigurableApplicationContext getContext() {
+		return context;
 	}
 }

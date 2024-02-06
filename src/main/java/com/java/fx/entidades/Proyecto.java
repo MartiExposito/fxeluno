@@ -34,9 +34,6 @@ public class Proyecto {
     @Column(name = "palabras_clave")
     private String palabrasClave;
 
-    @Column(name = "documentos")
-    private byte[] documentos;
-
     @Column(name = "tipo_proyecto", length = 50)
     private String tipoProyecto;
 
@@ -45,6 +42,18 @@ public class Proyecto {
 
     @Column(name = "calificacion")
     private Integer calificacion;
+
+    @Column(name = "auditoria", length = 50)
+    private String auditoria;
+
+    @Column(name = "en_cooperacion")
+    private Boolean enCooperacion;
+
+    @Column(name = "bajada_calificacion")
+    private Boolean bajadaCalificacion;
+
+    @Column(name = "fases")
+    private String fases;
 
     public Proyecto(int i, String s, LocalDate now, String s1, String s2, String s3) {
     }

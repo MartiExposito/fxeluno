@@ -42,7 +42,7 @@ public class Controller implements Initializable {
     @FXML
     public void cerrarAplicacion(){
 
-System.exit(0);
+        System.exit(0);
     }
     @FXML
     public void loginAction() {
@@ -93,11 +93,9 @@ System.exit(0);
     }
 
     private Parent cargarFXML(String fxml) throws IOException {
-        URL url = getClass().getResource(fxml);
-        if (url == null) {
-            throw new IOException("No se pudo cargar el archivo FXML: " + fxml);
-        }
-        return new FXMLLoader(url).load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+        loader.setControllerFactory(Main.getContext()::getBean); // Usa el contexto de Spring para instanciar el controlador
+        return loader.load();
     }
 
 

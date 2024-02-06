@@ -14,17 +14,11 @@ public class Documento {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_proyecto", nullable = false)
     private Proyecto idProyecto;
 
     @Column(name = "archivo")
     private byte[] archivo;
 
-    @Column(name = "nombre_archivo")
-    private String nombreArchivo;
-    @Override
-    public String toString(){
-        return nombreArchivo;
-    }
 }

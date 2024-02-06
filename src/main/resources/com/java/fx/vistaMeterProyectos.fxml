@@ -1,65 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java.fx.ControladorMeterProyectos" prefHeight="600.0" prefWidth="800.0">
-    <VBox spacing="20" alignment="TOP_CENTER" fillWidth="true" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
+<AnchorPane prefHeight="753.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java.fx.ControladorMeterProyectos">
+    <VBox alignment="TOP_CENTER" fillWidth="true" layoutX="14.0" layoutY="10.0" spacing="20" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="10.0">
         <padding>
-            <Insets top="10" right="10" bottom="10" left="10"/>
+            <Insets bottom="10" left="10" right="10" top="10" />
         </padding>
 
         <!-- Formulario para ingresar detalles del proyecto -->
-        <VBox spacing="10" alignment="TOP_CENTER">
+        <VBox alignment="TOP_CENTER" spacing="10">
             <Label text="Agregar/Editar Proyecto" />
-            <TextField fx:id="txtNombreProyecto" promptText="Nombre del Proyecto"/>
-            <DatePicker fx:id="dpFechaCreacion" promptText="Fecha de Creación"/>
-            <DatePicker fx:id="dpFechaInicio" promptText="Fecha de Inicio"/>
-            <DatePicker fx:id="dpFechaFin" promptText="Fecha de Fin"/>
-            <TextField fx:id="txtCodigoProyecto" promptText="Código del Proyecto"/>
-            <TextField fx:id="txtPalabrasClave" promptText="Palabras Clave"/>
-            <TextField fx:id="txtTipoProyecto" promptText="Tipo de Proyecto"/>
-            <CheckBox fx:id="chkActivo" text="Activo"/>
-            <TextField fx:id="txtCalificacion" promptText="Calificación"/>
+            <TextField fx:id="txtNombreProyecto" promptText="Nombre del Proyecto" />
+            <DatePicker fx:id="dpFechaCreacion" promptText="Fecha de Creación" />
+            <DatePicker fx:id="dpFechaInicio" promptText="Fecha de Inicio" />
+            <DatePicker fx:id="dpFechaFin" promptText="Fecha de Fin" />
+            <TextField fx:id="txtCodigoProyecto" promptText="Código del Proyecto" />
+            <TextField fx:id="txtPalabrasClave" promptText="Palabras Clave" />
+            <TextField fx:id="txtTipoProyecto" promptText="Tipo de Proyecto" />
+            <CheckBox fx:id="chkActivo" text="Activo" />
+            <TextField fx:id="txtCalificacion" promptText="Calificación" />
             <!-- Documentos y otros campos binarios o grandes pueden requerir un manejo especial -->
-            <Button text="Guardar" onAction="#guardarProyecto"/>
-            <Button text="Cancelar" onAction="#cancelarProyecto"/>
+            <TextField fx:id="txtAuditoria" promptText="Auditoría" />
+            <CheckBox fx:id="chkEnCooperacion" text="En Cooperación" />
+            <CheckBox fx:id="chkBajadaCalificacion" text="Bajada de Calificación" />
+            <TextField fx:id="txtFases" promptText="Fases" />
+         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+            <children>
+                  <Button fx:id="btnGuardar" onAction="#guardarProyecto" text="Guardar" />
+                <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editarProyecto" text="Editar" />
+                  <Button fx:id="btnCancelar" onAction="#cancelarProyecto" text="Cancelar" />
+               <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminarProyecto" text="Eliminar" />
+            </children>
+            <effect>
+               <ColorAdjust />
+            </effect>
+         </HBox>
         </VBox>
-
+   
         <!-- Tabla para mostrar los proyectos -->
         <TableView fx:id="tablaProyectos" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn text="Nombre" prefWidth="200.0">
-                    <cellValueFactory><PropertyValueFactory property="nombreProyecto"/></cellValueFactory>
+                <TableColumn fx:id="nombreProyectoColumn" prefWidth="200.0" text="Nombre">
+                    <cellValueFactory>
+                  <PropertyValueFactory property="nombreProyecto" />
+               </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Fecha de Creación" prefWidth="150.0">
-                    <cellValueFactory><PropertyValueFactory property="fechaCreacion"/></cellValueFactory>
+                <TableColumn fx:id="fechaCreacionColumn" prefWidth="150.0" text="Fecha de Creación">
+                    <cellValueFactory>
+                  <PropertyValueFactory property="fechaCreacion" />
+               </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Fecha de Inicio" prefWidth="150.0">
-                    <cellValueFactory><PropertyValueFactory property="fechaInicio"/></cellValueFactory>
+                <TableColumn fx:id="fechaInicioColumn" prefWidth="150.0" text="Fecha de Inicio">
+                    <cellValueFactory>
+                  <PropertyValueFactory property="fechaInicio" />
+               </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Fecha de Fin" prefWidth="150.0">
-                    <cellValueFactory><PropertyValueFactory property="fechaFin"/></cellValueFactory>
+                <TableColumn fx:id="fechaFinColumn" prefWidth="150.0" text="Fecha de Fin">
+                    <cellValueFactory>
+                  <PropertyValueFactory property="fechaFin" />
+               </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Código" prefWidth="100.0">
-                    <cellValueFactory><PropertyValueFactory property="codigoProyecto"/></cellValueFactory>
+                <TableColumn fx:id="codigoProyectoColumn" prefWidth="100.0" text="Código">
+                    <cellValueFactory>
+                  <PropertyValueFactory property="codigoProyecto" />
+               </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Palabras Clave" prefWidth="200.0">
-                    <cellValueFactory><PropertyValueFactory property="palabrasClave"/></cellValueFactory>
+                <TableColumn fx:id="palabrasClaveColumn" prefWidth="200.0" text="Palabras Clave">
+                    <cellValueFactory>
+                  <PropertyValueFactory property="palabrasClave" />
+               </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Tipo" prefWidth="100.0">
-                    <cellValueFactory><PropertyValueFactory property="tipoProyecto"/></cellValueFactory>
+                <TableColumn fx:id="tipoProyectoColumn" prefWidth="100.0" text="Tipo">
+                    <cellValueFactory>
+                  <PropertyValueFactory property="tipoProyecto" />
+               </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Activo" prefWidth="50.0">
-                    <cellValueFactory><PropertyValueFactory property="activo"/></cellValueFactory>
+                <TableColumn fx:id="activoColumn" prefWidth="50.0" text="Activo">
+                    <cellValueFactory>
+                  <PropertyValueFactory property="activo" />
+               </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Calificación" prefWidth="100.0">
-                    <cellValueFactory><PropertyValueFactory property="calificacion"/></cellValueFactory>
+                <TableColumn fx:id="calificacionColumn" prefWidth="100.0" text="Calificación">
+                    <cellValueFactory>
+                  <PropertyValueFactory property="calificacion" />
+               </cellValueFactory>
                 </TableColumn>
-                <!-- Para documentos y otros datos binarios, podrías querer usar un botón o indicador -->
             </columns>
         </TableView>
+      <Button fx:id="btnVolverLoggin" mnemonicParsing="false" onAction="#irLoggin" text="Volver Loggin" />
+
     </VBox>
 </AnchorPane>
