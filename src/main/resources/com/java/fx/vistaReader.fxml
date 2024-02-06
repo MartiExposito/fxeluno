@@ -1,91 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
 <?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
-
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java.fx.ControladorVistaReader">
-    <VBox alignment="TOP_CENTER" fillWidth="true" spacing="10" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java.fx.ControladorVistaReader" prefHeight="400.0" prefWidth="600.0">
+    <VBox spacing="10" alignment="TOP_CENTER" fillWidth="true" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
         <padding>
-            <Insets bottom="10" left="10" right="10" top="10" />
+            <Insets top="10" right="10" bottom="10" left="10"/>
         </padding>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FILTRAR POR PALABRA CLAVE : " />
-              <TextField fx:id="campoBusqueda" onKeyReleased="#filtrarProyectosPorPalabraClave" />
-         </children>
-      </HBox>
-
-        <Label style="-fx-font-size: 20px;" text="Proyectos" />
+        <Label text="Detalles del Proyecto" style="-fx-font-size: 20px;"/>
+        <TextField fx:id="filtroAuditoria" promptText="Filtrar por Auditoria" />
+        <TextField fx:id="filtroCodigo" promptText="Filtrar por Código" />
+        <TableView fx:id="tablaDetallesProyecto" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn text="ID" prefWidth="50.0">
+                    <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Auditoria" prefWidth="150.0">
+                    <cellValueFactory><PropertyValueFactory property="auditoria"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Código" prefWidth="100.0">
+                    <cellValueFactory><PropertyValueFactory property="codigo"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="En Cooperación" prefWidth="100.0">
+                    <cellValueFactory><PropertyValueFactory property="enCooperacion"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Bajada Calificación" prefWidth="100.0">
+                    <cellValueFactory><PropertyValueFactory property="bajadaCalificacion"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Fases" prefWidth="100.0">
+                    <cellValueFactory><PropertyValueFactory property="fases"/></cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+        <Label text="Proyectos" style="-fx-font-size: 20px;"/>
+        <TextField fx:id="filtroNombreProyecto" promptText="Filtrar por Nombre de Proyecto" />
+        <TextField fx:id="filtroCodigoProyecto" promptText="Filtrar por Código de Proyecto" />
         <TableView fx:id="tablaProyectos" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="idProyectoColumn" prefWidth="50.0" text="ID">
-                    <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+                <TableColumn text="ID" prefWidth="50.0">
+                    <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="nombreProyectoColumn" prefWidth="200.0" text="Nombre del Proyecto">
-                    <cellValueFactory><PropertyValueFactory property="nombreProyecto" /></cellValueFactory>
+                <TableColumn text="Nombre de Proyecto" prefWidth="150.0">
+                    <cellValueFactory><PropertyValueFactory property="nombreProyecto"/></cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="fechaCreacionColumn" prefWidth="150.0" text="Fecha de Creación">
-                    <cellValueFactory><PropertyValueFactory property="fechaCreacion" /></cellValueFactory>
+                <TableColumn text="Fecha de Creación" prefWidth="100.0">
+                    <cellValueFactory><PropertyValueFactory property="fechaCreacion"/></cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="fechaInicioColumn" prefWidth="150.0" text="Fecha de Inicio">
-                    <cellValueFactory><PropertyValueFactory property="fechaInicio" /></cellValueFactory>
+                <TableColumn text="Código de Proyecto" prefWidth="100.0">
+                    <cellValueFactory><PropertyValueFactory property="codigoProyecto"/></cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="fechaFinColumn" prefWidth="150.0" text="Fecha de Fin">
-                    <cellValueFactory><PropertyValueFactory property="fechaFin" /></cellValueFactory>
+                <TableColumn text="Palabras Clave" prefWidth="100.0">
+                    <cellValueFactory><PropertyValueFactory property="palabrasClave"/></cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="codigoProyectoColumn" prefWidth="150.0" text="Código del Proyecto">
-                    <cellValueFactory><PropertyValueFactory property="codigoProyecto" /></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="palabrasClaveColumn" prefWidth="150.0" text="Palabras Clave">
-                    <cellValueFactory><PropertyValueFactory property="palabrasClave" /></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="tipoProyectoColumn" prefWidth="150.0" text="Tipo de Proyecto">
-                    <cellValueFactory><PropertyValueFactory property="tipoProyecto" /></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="activoColumn" prefWidth="100.0" text="Activo">
-                    <cellValueFactory><PropertyValueFactory property="activo" /></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="calificacionColumn" prefWidth="100.0" text="Calificación">
-                    <cellValueFactory><PropertyValueFactory property="calificacion" /></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="auditoriaColumn" prefWidth="200.0" text="Auditoria">
-                    <cellValueFactory><PropertyValueFactory property="auditoria" /></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="enCooperacionColumn" prefWidth="150.0" text="En Cooperación">
-                    <cellValueFactory><PropertyValueFactory property="enCooperacion" /></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="bajadaCalificacionColumn" prefWidth="150.0" text="Bajada Calificación">
-                    <cellValueFactory><PropertyValueFactory property="bajadaCalificacion" /></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="fasesColumn" prefWidth="200.0" text="Fases">
-                    <cellValueFactory><PropertyValueFactory property="fases" /></cellValueFactory>
+                <TableColumn text="Tipo de Proyecto" prefWidth="100.0">
+                    <cellValueFactory><PropertyValueFactory property="tipoProyecto"/></cellValueFactory>
                 </TableColumn>
             </columns>
         </TableView>
-
-        <Label style="-fx-font-size: 20px;" text="Documentos del Proyecto Seleccionado" />
-        <TableView fx:id="tablaDocumentos" VBox.vgrow="ALWAYS">
-            <columns>
-                <!-- Asumiendo que hay un nombre o descripción del archivo en la entidad Documento -->
-                <TableColumn fx:id="idProyectoDocumentoColumn" prefWidth="200.0" text="ID Proyecto">
-                    <cellValueFactory><PropertyValueFactory property="nombreArchivo" /></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="archivoDocumentoColumn" prefWidth="200.0" text="Archivo">
-                    <cellValueFactory><PropertyValueFactory property="nombreDelCampoArchivo" /></cellValueFactory>
-                </TableColumn>
-
-
-            </columns>
-        </TableView>
-
-
     </VBox>
 </AnchorPane>
