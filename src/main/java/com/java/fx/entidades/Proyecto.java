@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,6 +23,8 @@ public class Proyecto {
 
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDate fechaCreacion;
+
+
 
     @Column(name = "fecha_inicio", nullable = false)
     private LocalDate fechaInicio;
@@ -41,7 +45,7 @@ public class Proyecto {
     private Boolean activo;
 
     @Column(name = "calificacion")
-    private Integer calificacion;
+    private String calificacion;
 
     @Column(name = "auditoria", length = 50)
     private String auditoria;
@@ -55,10 +59,12 @@ public class Proyecto {
     @Column(name = "fases")
     private String fases;
 
-    public Proyecto(int i, String s, LocalDate now, String s1, String s2, String s3) {
+    @OneToMany(mappedBy = "idProyecto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Documento> documentos = new LinkedHashSet<>();
+
+    @Override
+    public String toString(){
+        return id.toString();
     }
 
-    public Proyecto() {
-
-    }
 }

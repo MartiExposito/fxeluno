@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java.fx.ControladorVistaMenu">
+   <children>
+      <VBox alignment="CENTER" layoutX="46.0" prefHeight="400.0" prefWidth="508.0" spacing="15.0">
+         <children>
+            <Button fx:id="adminButton" mnemonicParsing="false" onAction="#irVistaUsuarios" prefHeight="59.0" prefWidth="316.0" text="Gestión Usuarios" />
+            <Button fx:id="writerButton" mnemonicParsing="false" onAction="#irMeterProyetos" prefHeight="59.0" prefWidth="316.0" text="Gestión Proyectos" />
+            <Button fx:id="readerButton" mnemonicParsing="false" onAction="#irVerProyectos" prefHeight="59.0" prefWidth="316.0" text="Ver Proyectos" />
+            <Button fx:id="statsButton" mnemonicParsing="false" onAction="#irEstadisticas" prefHeight="59.0" prefWidth="316.0" text="Dashboard" />
+            <Label fx:id="txtCerrarSesion" onMouseClicked="#irLoggin" text="Cerrar Sesión" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

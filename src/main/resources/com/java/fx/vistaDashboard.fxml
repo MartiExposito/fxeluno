@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<VBox spacing="20" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java.fx.ControladorDashboard">
+    <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Dashboard de Proyectos" />
+    <HBox spacing="20">
+        <VBox spacing="10">
+            <Button fx:id="btnActualizar" text="Actualizar Gráficos" onAction="#actualizarGraficos"/>
+
+            <!-- Estadísticas Simples -->
+            <Label style="-fx-font-size: 16px;" text="Total de Proyectos" />
+            <Label fx:id="labelTotalProyectos" style="-fx-font-size: 14px;">
+            <VBox.margin>
+               <Insets left="30.0" />
+            </VBox.margin></Label>
+            <Label style="-fx-font-size: 16px;" text="Proyectos Activos" />
+            <Label fx:id="labelProyectosActivos" style="-fx-font-size: 14px;" textFill="#1aff00">
+            <VBox.margin>
+               <Insets left="30.0" />
+            </VBox.margin></Label>
+            <Label style="-fx-font-size: 16px;" text="Proyectos Inactivos" />
+            <Label fx:id="labelProyectosInactivos" style="-fx-font-size: 14px;" textFill="RED">
+            <VBox.margin>
+               <Insets left="30.0" />
+            </VBox.margin></Label>
+        </VBox>
+
+        <!-- Gráfico de Proyectos Activos vs Inactivos -->
+        <VBox spacing="10">
+            <Label style="-fx-font-size: 16px;" text="Proyectos Activos vs Inactivos" />
+            <PieChart fx:id="pieChartActivosInactivos" prefHeight="250.0" prefWidth="300.0" />
+        </VBox>
+
+        <!-- Gráfico de Distribución de Proyectos por Fase -->
+        <VBox spacing="10">
+            <Label style="-fx-font-size: 16px;" text="Distribución de Proyectos por Fase" />
+            <PieChart fx:id="pieChartProyectosPorFase" prefHeight="250.0" prefWidth="300.0" />
+        </VBox>
+    </HBox>
+
+    <HBox spacing="20">
+        <!-- Gráfico de Media de Calificaciones -->
+        <VBox spacing="10">
+            <Label style="-fx-font-size: 16px;" text="Media de Calificaciones" />
+            <BarChart fx:id="barChartMediaCalificaciones" prefHeight="250.0" prefWidth="300.0">
+                <xAxis><CategoryAxis label="Calificación" /></xAxis>
+                <yAxis><NumberAxis minorTickLength="1.0" tickUnit="1.0" /></yAxis>
+            </BarChart>
+        </VBox>
+
+        <!-- Gráfico de Barras por Tipo de Proyecto -->
+        <VBox spacing="10">
+            <Label style="-fx-font-size: 16px;" text="Distribución por Tipo de Proyecto" />
+            <BarChart fx:id="barChartPorTipoProyecto" prefHeight="250.0" prefWidth="300.0">
+                <xAxis><CategoryAxis label="Tipo de Proyecto" /></xAxis>
+                <yAxis><NumberAxis label="Cantidad" /></yAxis>
+            </BarChart>
+        </VBox>
+
+        <!-- Gráfico de Líneas para Tendencias Temporales -->
+        <VBox spacing="10">
+            <Label style="-fx-font-size: 16px;" text="Tendencias Temporales" />
+            <LineChart fx:id="lineChartTendenciasTemporales" prefHeight="250.0" prefWidth="300.0">
+                <xAxis><CategoryAxis label="Fecha" /></xAxis>
+                <yAxis><NumberAxis label="Proyectos" /></yAxis>
+            </LineChart>
+        </VBox>
+    </HBox>
+</VBox>
