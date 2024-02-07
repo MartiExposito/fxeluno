@@ -25,6 +25,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Controlador de la vista de gestión de proyectos.
+ * Gestiona la creación, edición y eliminación de proyectos, así como la carga de documentos relacionados.
+ */
 @Component
 public class ControladorMeterProyectos  {
 
@@ -124,7 +128,9 @@ public class ControladorMeterProyectos  {
     private Button btnEditarArchivos;
     @FXML
     Proyecto proyectoActual;
-
+    /**
+     * Método para guardar un nuevo proyecto en la base de datos.
+     */
     @FXML
     private void guardarProyecto() {
         if (!validarCampos()) {
@@ -157,6 +163,9 @@ public class ControladorMeterProyectos  {
         // Vuelve a cargar los proyectos en la tabla
         cargarProyectosEnTabla();
     }
+    /**
+     * Método para validar los campos de entrada antes de guardar un proyecto.
+     */
     private boolean validarCampos() {
         StringBuilder mensajeError = new StringBuilder();
 
@@ -198,7 +207,9 @@ public class ControladorMeterProyectos  {
 
         return true;
     }
-
+    /**
+     * Método para filtrar proyectos por palabras clave... repetido hasta la saciedad....
+     */
     @FXML
     private void filtrarProyectosPorPalabraClave(){
         String textoBusqueda = campoBusqueda.getText().toLowerCase();
@@ -209,15 +220,11 @@ public class ControladorMeterProyectos  {
 
     }
 
-    private void mostrarAlerta(String titulo, String contenido) {
-        Alert alerta = new Alert(Alert.AlertType.ERROR);
-        alerta.setTitle(titulo);
-        alerta.setHeaderText(null);
-        alerta.setContentText(contenido);
-        alerta.showAndWait();
-    }
 
 
+    /**
+     * Método para seleccionar y guardar archivos relacionados con un proyecto.
+     */
     @FXML
     private void seleccionarYGuardarArchivos() {
         Proyecto proyectoSeleccionado = tablaProyectos.getSelectionModel().getSelectedItem();
@@ -248,7 +255,9 @@ public class ControladorMeterProyectos  {
             }
         }
     }
-
+    /**
+     * Método para editar archivos relacionados con un proyecto. Es decir "las lineas de la cabecera"
+     */
     @FXML
     private void editarArchivos() {
         if (!validarCampos()) {
@@ -280,10 +289,9 @@ public class ControladorMeterProyectos  {
         }
     }
 
-
-
-
-
+    /**
+     * Método para editar los detalles de un proyecto seleccionado.
+     */
 
     @FXML
     private void editarProyecto() {
@@ -311,7 +319,9 @@ public class ControladorMeterProyectos  {
             mostrarMensajeError("No se ha seleccionado ningún proyecto.");
         }
     }
-
+    /**
+     * Método para actualizar un proyecto después de la edición.
+     */
     @FXML
     private void actualizarProyecto() {
         if (proyectoActual != null) {
@@ -356,7 +366,9 @@ public class ControladorMeterProyectos  {
         }
     }
 
-
+    /**
+     * Método para eliminar un proyecto seleccionado.
+     */
     @FXML
     private void eliminarProyecto() {
         Proyecto proyectoSeleccionado = tablaProyectos.getSelectionModel().getSelectedItem();
@@ -385,12 +397,9 @@ public class ControladorMeterProyectos  {
             mostrarMensajeError("No se ha seleccionado ningún proyecto para eliminar.");
         }
     }
-
-
-
-
-
-
+    /**
+     * Método para cancelar la operación actual y limpiar los campos.
+     */
     @FXML
     private void cancelarProyecto() {
 
@@ -406,6 +415,7 @@ public class ControladorMeterProyectos  {
         txtPalabrasClave.clear();
         txtTipoProyecto.clear();
         chkActivo.setSelected(false);
+        //Mantenemos en edicion parte antigua de código por si se quiere volver a esta idea de usar txt
         //txtCalificacion.clear();
         txtAuditoria.clear();
         //txtFases.clear();
@@ -417,7 +427,9 @@ public class ControladorMeterProyectos  {
         cbCalificacion.setPromptText("Seleccionar Calificación");
 
     }
-
+    /**
+     * Inicialización del controlador y configuración de la tabla y otros elementos de la interfaz.
+     */
     @FXML
     public void initialize() {
 
@@ -456,6 +468,14 @@ public class ControladorMeterProyectos  {
         } catch (Exception e) {
             mostrarMensajeError("Error al cargar proyectos: " + e.getMessage());
         }
+    }
+
+    private void mostrarAlerta(String titulo, String contenido) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(contenido);
+        alerta.showAndWait();
     }
 
 }

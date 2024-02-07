@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador para la vista de administrador.
+ */
 @Component
 public class ControladorVistaAdmin implements Initializable {
 
@@ -43,34 +45,53 @@ public class ControladorVistaAdmin implements Initializable {
     @FXML
     private Button cambiarPermisosButton;
 
+    /**
+     * Inicializa la vista y configura los elementos iniciales.
+     *
+     * @param location  La ubicación de la vista.
+     * @param resources Los recursos utilizados por la vista.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Configura las columnas de la tabla de usuarios
         columnaId.setCellValueFactory(new PropertyValueFactory<>("id"));
         columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaRol.setCellValueFactory(new PropertyValueFactory<>("rol"));
 
-        comboBoxRoles.getItems().addAll("Admin", "Read", "Write"); // Ejemplo de roles
+        // Agrega ejemplos de roles al ComboBox
+        comboBoxRoles.getItems().addAll("Admin", "Read", "Write");
+
+        // Carga la lista de usuarios
         cargarUsuarios();
     }
 
+    /**
+     * Carga la lista de usuarios en la tabla.
+     */
     private void cargarUsuarios() {
         tablaUsuarios.setItems(FXCollections.observableArrayList(usuarioRepository.findAll()));
     }
+
     /**
      * Agrega un nuevo usuario a la base de datos con la información proporcionada en la interfaz de usuario.
      */
     @FXML
     private void agregarUsuario() {
         try {
+            // Crea un nuevo usuario con los datos de la interfaz
             Usuario nuevoUsuario = new Usuario();
             nuevoUsuario.setNombre(nombreUsuarioTextField.getText());
             nuevoUsuario.setContraseña(contraseñaPasswordField.getText());
             nuevoUsuario.setRol(comboBoxRoles.getValue());
 
+            // Guarda el nuevo usuario en la base de datos
             usuarioRepository.save(nuevoUsuario);
+
+            // Recarga la lista de usuarios y limpia los campos
             cargarUsuarios();
             limpiarCampos();
         } catch (Exception e) {
+            // Muestra un mensaje de error en caso de excepción
             mostrarMensajeError("Error al agregar usuario: " + e.getMessage());
         }
     }
@@ -79,6 +100,7 @@ public class ControladorVistaAdmin implements Initializable {
     private void eliminarUsuario() {
         Usuario seleccionado = tablaUsuarios.getSelectionModel().getSelectedItem();
         if (seleccionado != null) {
+            // Elimina el usuario seleccionado de la base de datos
             usuarioRepository.delete(seleccionado);
             cargarUsuarios();
         } else {
@@ -90,6 +112,7 @@ public class ControladorVistaAdmin implements Initializable {
     private void cambiarPermisos() {
         Usuario seleccionado = tablaUsuarios.getSelectionModel().getSelectedItem();
         if (seleccionado != null) {
+            // Cambia los permisos del usuario seleccionado y guarda en la base de datos
             seleccionado.setRol(comboBoxRoles.getValue());
             usuarioRepository.save(seleccionado);
             cargarUsuarios();
@@ -98,12 +121,20 @@ public class ControladorVistaAdmin implements Initializable {
         }
     }
 
+    /**
+     * Limpia los campos de entrada de datos.
+     */
     private void limpiarCampos() {
         nombreUsuarioTextField.clear();
         contraseñaPasswordField.clear();
         comboBoxRoles.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Muestra un mensaje de error en una ventana emergente.
+     *
+     * @param mensaje El mensaje de error a mostrar.
+     */
     private void mostrarMensajeError(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setTitle("Error");

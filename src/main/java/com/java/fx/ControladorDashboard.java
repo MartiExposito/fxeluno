@@ -3,10 +3,7 @@ package com.java.fx;
 import com.java.fx.entidades.Proyecto;
 import com.java.fx.entidades.ProyectoRepository;
 import javafx.fxml.FXML;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +17,19 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
+
 @Component
 public class ControladorDashboard {
 
+    // Etiquetas para mostrar estadísticas
     @FXML
     private Label labelTotalProyectos;
     @FXML
     private Label labelProyectosActivos;
     @FXML
     private Label labelProyectosInactivos;
+
+    // Gráficos y botón de actualización
     @FXML
     private PieChart pieChartActivosInactivos;
     @FXML
@@ -42,14 +43,17 @@ public class ControladorDashboard {
     @FXML
     private Button btnActualizar;
 
+    // Repositorio para acceder a los datos de los proyectos
     @Autowired
     private ProyectoRepository proyectoRepository;
 
+    // Método que se ejecuta al cargar el controlador
     @FXML
     public void initialize() {
         cargarEstadisticas();
     }
 
+    // Carga y muestra las estadísticas
     private void cargarEstadisticas() {
         List<Proyecto> proyectos = proyectoRepository.findAll();
         labelTotalProyectos.setText(String.valueOf(proyectos.size()));
@@ -65,6 +69,7 @@ public class ControladorDashboard {
         actualizarLineChartTendenciasTemporales(proyectos);
     }
 
+    // Actualiza el gráfico de proyectos activos e inactivos
     private void actualizarPieChartActivosInactivos(List<Proyecto> proyectos) {
         long activos = proyectos.stream().filter(Proyecto::getActivo).count();
         long inactivos = proyectos.size() - activos;
@@ -76,7 +81,7 @@ public class ControladorDashboard {
         pieChartActivosInactivos.getData().addAll(slice1, slice2);
     }
 
-
+    // Actualiza el gráfico de proyectos por fase
     private void actualizarPieChartProyectosPorFase(List<Proyecto> proyectos) {
         Map<String, Long> proyectosPorFase = proyectos.stream()
                 .collect(Collectors.groupingBy(Proyecto::getFases, Collectors.counting()));
@@ -90,6 +95,7 @@ public class ControladorDashboard {
         }
     }
 
+    // Actualiza el gráfico de media de calificaciones
     private void actualizarBarChartMediaCalificaciones(List<Proyecto> proyectos) {
         Map<String, Long> proyectosPorCalificacion = proyectos.stream()
                 .collect(Collectors.groupingBy(Proyecto::getCalificacion, Collectors.counting()));
@@ -101,7 +107,7 @@ public class ControladorDashboard {
         barChartMediaCalificaciones.getData().add(series);
     }
 
-
+    // Actualiza el gráfico de proyectos por tipo
     private void actualizarBarChartPorTipoProyecto(List<Proyecto> proyectos) {
         Map<String, Long> proyectosPorTipo = proyectos.stream()
                 .collect(Collectors.groupingBy(Proyecto::getTipoProyecto, Collectors.counting()));
@@ -112,14 +118,17 @@ public class ControladorDashboard {
                 series.getData().add(new XYChart.Data<>(tipo, cantidad)));
         barChartPorTipoProyecto.getData().add(series);
     }
+
+    // Método para actualizar los gráficos cuando se hace clic en el botón "Actualizar"
     @FXML
     private void actualizarGraficos() {
         cargarEstadisticas();
     }
+
+    // Actualiza el gráfico de tendencias temporales
     private void actualizarLineChartTendenciasTemporales(List<Proyecto> proyectos) {
         LocalDate hoy = LocalDate.now();
 
-        // Agrupar los proyectos finalizados por año y mes y contarlos
         Map<YearMonth, Long> proyectosPorMes = proyectos.stream()
                 .filter(proyecto -> proyecto.getFechaFin() != null && proyecto.getFechaFin().isBefore(hoy))
                 .collect(Collectors.groupingBy(proyecto -> YearMonth.from(proyecto.getFechaFin()),
@@ -137,12 +146,4 @@ public class ControladorDashboard {
         lineChartTendenciasTemporales.getXAxis().setLabel("Fecha");
         lineChartTendenciasTemporales.getYAxis().setLabel("Proyectos Finalizados");
     }
-
-
-
-
-
 }
-
-
-

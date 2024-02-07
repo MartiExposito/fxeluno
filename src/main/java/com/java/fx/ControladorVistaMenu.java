@@ -26,23 +26,36 @@ public class ControladorVistaMenu {
     @FXML
     Label txtCerrarSesion;
 
-
+    /**
+     * Navega a la vista de gestión de usuarios.
+     */
     @FXML
     private void irVistaUsuarios(){
         cargarVista("vistaAdmin.fxml","Gestor Usuarios");
     }
+    /**
+     * Navega a la vista de edición de proyectos.
+     */
     @FXML
     private void irMeterProyetos(){
         cargarVista("vistaMeterProyectos.fxml", "Editor Proyectos");
 
     }
+    /**
+     * Navega a la vista de lectura de proyectos.
+     */
     @FXML
     private void irVerProyectos(){
         cargarVista("vistaReader.fxml", "Proyectos Reader");
     }
+    /**
+     * Navega a la vista de estadísticas.
+     */
     @FXML
     private void irEstadisticas(){cargarVista("vistaDashboard.fxml", "Dashboard");}
-
+    /**
+     * Regresa a la vista de inicio de sesión.
+     */
     @FXML
     private void irLoggin(){
         try {

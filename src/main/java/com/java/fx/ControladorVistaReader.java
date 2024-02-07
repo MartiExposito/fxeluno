@@ -32,7 +32,11 @@ public class ControladorVistaReader {
 
     @Autowired
     private DocumentoRepository documentoRepository;
-
+    /**
+     * Constructor del controlador que recibe los repositorios como parámetros.
+     * @param proyectoRepository Repositorio de proyectos.
+     * @param documentoRepository Repositorio de documentos.
+     */
     @Autowired
     public ControladorVistaReader(ProyectoRepository proyectoRepository, DocumentoRepository documentoRepository) {
         this.proyectoRepository = proyectoRepository;
@@ -77,6 +81,10 @@ public class ControladorVistaReader {
         escucharSeleccionProyecto();
         configurarDobleClicEnDocumentos();
     }
+
+    /**
+     * Filtra los proyectos por palabras clave ingresadas en el campo de búsqueda.
+     */
     @FXML
     private void filtrarProyectosPorPalabraClave(){
         String textoBusqueda = campoBusqueda.getText().toLowerCase();
@@ -86,7 +94,9 @@ public class ControladorVistaReader {
         tablaProyectos.getItems().setAll(proyectosFiltrados);
 
     }
-
+    /**
+     * Configura las columnas de la tabla de proyectos.
+     */
     private void configurarColumnasProyecto() {
         idProyectoColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nombreProyectoColumn.setCellValueFactory(new PropertyValueFactory<>("nombreProyecto"));
@@ -103,7 +113,9 @@ public class ControladorVistaReader {
         bajadaCalificacionColumn.setCellValueFactory(new PropertyValueFactory<>("bajadaCalificacion"));
         fasesColumn.setCellValueFactory(new PropertyValueFactory<>("fases"));
     }
-
+    /**
+     * Configura las columnas de la tabla de documentos.
+     */
     private void configurarColumnasDocumento() {
 
         idProyectoDocumentoColumn.setCellValueFactory(new PropertyValueFactory<>("idProyecto"));
@@ -111,17 +123,24 @@ public class ControladorVistaReader {
 
     }
 
-
+    /**
+     * Carga la lista de proyectos en la tabla de proyectos.
+     */
     private void cargarProyectos() {
         List<Proyecto> proyectos = proyectoRepository.findAll();
         tablaProyectos.getItems().setAll(proyectos);
     }
-
+    /**
+     * Carga la lista de documentos correspondientes al proyecto seleccionado.
+     */
     private void cargarDocumentos(Proyecto proyecto) {
         List<Documento> documentos = documentoRepository.findByIdProyecto(proyecto);
         tablaDocumentos.getItems().setAll(documentos);
     }
 
+    /**
+     * Escucha la selección de un proyecto en la tabla y carga los documentos correspondientes.
+     */
     private void escucharSeleccionProyecto() {
         tablaProyectos.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -129,7 +148,9 @@ public class ControladorVistaReader {
             }
         });
     }
-
+    /**
+     * Configura el evento de doble clic en documentos para abrirlos.
+     */
     private void configurarDobleClicEnDocumentos() {
         tablaDocumentos.setRowFactory(tv -> {
             TableRow<Documento> row = new TableRow<>();
@@ -142,7 +163,10 @@ public class ControladorVistaReader {
             return row;
         });
     }
-
+    /**
+     * Abre el documento seleccionado en una ventana externa o lo descarga.
+     * @param documento Documento a abrir o descargar.
+     */
     private void abrirDocumento(Documento documento) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialFileName(documento.getNombreArchivo());
@@ -152,7 +176,11 @@ public class ControladorVistaReader {
             guardarYAbrirArchivo(documento, archivoDestino);
         }
     }
-
+    /**
+     * Guarda el archivo en disco y lo abre en la aplicación predeterminada.
+     * @param documento Documento a guardar y abrir.
+     * @param archivoDestino Ruta del archivo de destino.
+     */
     private void guardarYAbrirArchivo(Documento documento, File archivoDestino) {
         try {
             byte[] contenidoArchivo = documento.getArchivo();

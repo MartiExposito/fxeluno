@@ -79,7 +79,9 @@ public class ControladorEditarArchivos {
     public ControladorEditarArchivos() {
 
     }
-
+    /**
+     * Método para filtrar proyectos por palabras clave... otra vez...
+     */
     @FXML
     private void filtrarProyectosPorPalabraClave(){
         String textoBusqueda = campoBusqueda.getText().toLowerCase();
@@ -110,7 +112,9 @@ public class ControladorEditarArchivos {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
+    /**
+     * Inicialización del controlador y configuración de la tabla y otros elementos de la interfaz.
+     */
     @FXML
     public void initialize() {
         configurarColumnasProyecto();
@@ -118,7 +122,9 @@ public class ControladorEditarArchivos {
         cargarProyectos();
         escucharSeleccionProyecto();
     }
-
+    /**
+     * Método para configurar las columnas de la tabla de proyectos.
+     */
     private void configurarColumnasProyecto() {
         idProyectoColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nombreProyectoColumn.setCellValueFactory(new PropertyValueFactory<>("nombreProyecto"));
@@ -135,19 +141,25 @@ public class ControladorEditarArchivos {
         bajadaCalificacionColumn.setCellValueFactory(new PropertyValueFactory<>("bajadaCalificacion"));
         fasesColumn.setCellValueFactory(new PropertyValueFactory<>("fases"));
     }
-
+    /**
+     * Método para configurar las columnas de la tabla de documentos.
+     */
     private void configurarColumnasDocumento() {
         idDocumentoColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idProyectoDocumentoColumn.setCellValueFactory(new PropertyValueFactory<>("idProyecto"));
         nombreArchivoColumn.setCellValueFactory(new PropertyValueFactory<>("nombreArchivo"));
 
     }
-
+    /**
+     * Método para cargar la lista de proyectos en la tabla de proyectos.
+     */
     private void cargarProyectos() {
         List<Proyecto> proyectos = proyectoRepository.findAll();
         tablaProyectos.getItems().setAll(proyectos);
     }
-
+    /**
+     * Método para escuchar la selección de un proyecto en la tabla de proyectos.
+     */
     private void escucharSeleccionProyecto() {
         tablaProyectos.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -156,6 +168,9 @@ public class ControladorEditarArchivos {
         });
     }
 
+    /**
+     * Método para agregar un nuevo documento relacionado con el proyecto.
+     */
     @FXML
     private void actionAñadirDoc() {
         FileChooser fileChooser = new FileChooser();
@@ -178,6 +193,9 @@ public class ControladorEditarArchivos {
             }
         }
     }
+    /**
+     * Método para eliminar un documento seleccionado.
+     */
     @FXML
     private void actionEliminarDoc() {
         Documento documentoSeleccionado = tablaDocumentos.getSelectionModel().getSelectedItem();
